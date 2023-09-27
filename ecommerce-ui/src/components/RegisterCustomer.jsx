@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {createCustomer} from './../service/api';
+import { useNavigate } from 'react-router-dom';
 import { useWishlist } from './ShopContext';
 
 const RegisterCustomer = () => {
@@ -7,21 +7,35 @@ const RegisterCustomer = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [isRegistered, setIsRegistered] = useState(false);
-    const {setCustomerID} = useWishlist();
+    const {getIsUserLoggedIn, loginUser} = useWishlist();
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
     
         try {
-          const response = await createCustomer({ name, email });
-          if (response.id) {
-            setIsRegistered(true); 
-            setCustomerID(response.id);
+          const response = await fetch('/customer', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email }),
+          });
+    
+          if (response.ok) {
+            loginUser({name, email});
+            setIsRegistered(true);
+            setTimeout(() => {
+                navigate('/');
+              }, 2000);
           } else {
-            console.error('Registration failed:', response.statusText);
+            // Handle error response
+            const errorData = await response.json();
+            console.error('Registraition failed:', errorData.message);
+            
           }
         } catch (error) {
-          console.error('Registration failed:', error);
+          console.error('Registraition failed:', error);
         }
       };
 

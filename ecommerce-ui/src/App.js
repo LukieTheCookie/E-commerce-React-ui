@@ -7,6 +7,7 @@ import ProductDetials from './components/ProductDetails';
 import Basket from './components/Basket';
 import Checkout from './components/Checkout';
 import PastOrders from './components/PastOrders';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path='/' Component={Product}/>
           <Route path='/product/:productId' Component={ProductDetials}/>
+          <Route path='/login' Component={Login} />
           <Route path='/register' Component={RegisterCustomer} />
           <Route path='/basket' Component={Basket} />
           <Route path='/cart' Component={Checkout} />

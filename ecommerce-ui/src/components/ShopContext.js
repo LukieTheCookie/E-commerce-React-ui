@@ -9,7 +9,7 @@ export const useWishlist = () => {
 export const WishlistProvider = ({ children }) => {
   const [wishlist, setWishlist] = useState([]);
   const [cart, setCart] = useState([]);
-  const [customerId, setCustomerId] = useState(null);
+  const [user, setUser] = useState(null);
 
   const addToWishlist = (product) => {
     setWishlist((prevWishlist) => [...prevWishlist, product]);
@@ -41,13 +41,18 @@ export const WishlistProvider = ({ children }) => {
     return uniqueProductIds.size;
   };
 
-  const getCustomerId = () => {
-    return customerId;
-  }
+  const loginUser = (userData) => {
+    setUser(userData);
+  };
 
-  const setCustomerID = (customerID) => {
-    setCustomerId(customerID);
-  }
+  const logoutUser = () => {
+    setUser(null);
+  };
+
+  const getIsUserLoggedIn = () => {
+    return user !== null;
+  };
+
 
   return (
     <WishlistContext.Provider
@@ -60,8 +65,10 @@ export const WishlistProvider = ({ children }) => {
         removeFromCart,
         calculateTotal,
         calculateTotalQuantity,
-        getCustomerId,
-        setCustomerID
+        user,
+        loginUser,
+        logoutUser,
+        getIsUserLoggedIn,
       }}
     >
       {children}
