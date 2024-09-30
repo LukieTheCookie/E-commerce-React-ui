@@ -1,5 +1,4 @@
-# Andile-Project
-E-commerce SasS
+# E-commerce SasS
 
 How to:
   move to ecommerce-ui dir -> cd ecommerce-ui/
